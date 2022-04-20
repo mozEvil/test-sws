@@ -1,0 +1,144 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Swagger Test-SWS",
+    "description": "Info about Person API.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "API",
+      "description": "Operations available to public access"
+    }
+  ],
+  "paths": {
+    "/api/person": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "Add a new person to the db.",
+        "operationId": "addPerson",
+        "requestBody": {
+          "description": "Person object that needs to be added to the data base.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful create person",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "Gets all of persons",
+        "description": "Returns an array of persons",
+        "operationId": "getAllPersons",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/person/{id}": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "Find person by ID",
+        "description": "Returns a single person",
+        "operationId": "getPerson",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of person to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Person not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "format": "varchar(20)"
+          },
+          "lastName": {
+            "type": "string",
+            "format": "varchar(20)"
+          },
+          "middleName": {
+            "type": "string",
+            "format": "varchar(20)"
+          },
+          "email": {
+            "type": "string",
+            "format": "varchar(20)"
+          },
+          "phone": {
+            "type": "string",
+            "format": "varchar(20)"
+          }
+        }
+      }
+    }
+  }
+}
