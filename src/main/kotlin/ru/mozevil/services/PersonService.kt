@@ -11,16 +11,16 @@ class PersonService {
     }
 
     fun getPerson(id: Int) = transaction {
-        PersonEntity.findById(id)!!.toPerson()
+        PersonEntity.findById(id)?.toPerson()
     }
 
     fun addPerson(person: Person) = transaction {
         PersonEntity.new {
-            this.firstName = person.firstName
-            this.lastName = person.lastName
-            this.middleName = person.middleName
-            this.email = person.email
-            this.phone = person.phone
+            this.firstName = person.firstName.toString()
+            this.lastName = person.lastName.toString()
+            this.middleName = person.middleName.toString()
+            this.email = person.email.toString()
+            this.phone = person.phone.toString()
         }.toPerson()
     }
 }

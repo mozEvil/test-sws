@@ -22,13 +22,27 @@ fun Route.person() {
         }
 
         get("/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalStateException("Must provide id")
-            call.respond(personService.getPerson(id))
+            val id = call.parameters["id"]?.toIntOrNull() ?: run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+            val person = personService.getPerson(id)
+            person?.let { call.respond(person) } ?: call.respond(HttpStatusCode.NotFound)
         }
 
         post {
             val person = call.receive<Person>()
-            call.respond(HttpStatusCode.Created, personService.addPerson(person))
+            val l1 = person.firstName?.length ?: 0
+            val l2 = person.lastName?.length ?: 0
+            val l3 = person.middleName?.length ?: 0
+            val l4 = person.email?.length ?: 0
+            val l5 = person.phone?.length ?: 0
+
+            if (l1 > 20 || l2 > 20 || l3 > 20 || l4 >20 || l5 > 20) {
+                call.respond(HttpStatusCode.BadRequest)
+            } else {
+                call.respond(HttpStatusCode.Created, personService.addPerson(person))
+            }
         }
     }
 }

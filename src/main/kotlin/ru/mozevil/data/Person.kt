@@ -27,9 +27,9 @@ class PersonEntity(id: EntityID<Int>) : IntEntity(id) {
 
 data class Person (
     val id: Int,
-    val firstName: String,
-    val lastName: String,
-    val middleName: String,
-    val email: String,
-    val phone: String
+    val firstName: String?,
+    val lastName: String?,
+    val middleName: String?,
+    val email: String?,
+    val phone: String?
 )
